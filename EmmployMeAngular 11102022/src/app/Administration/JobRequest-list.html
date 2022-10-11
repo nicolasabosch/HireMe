@@ -1,0 +1,93 @@
+﻿<form class="form-list">
+	<form-list-header [crudForm]="this"></form-list-header>
+	<div class="form-body">
+		<h6 class="text-muted" tlt>Críterios de Búsqueda</h6>
+		<div class="panel-search">
+			<div class="row">
+				<div class="col-sm-1 form-group">
+					<label for="txtJobRequestID">
+						Código
+					</label>
+					<input type="text" [(ngModel)]="search.JobRequestID" class="form-control" autocomplete="off"
+						style="text-align: right" numeric="0" placeholder="Código" name="txtJobRequestID" />
+				</div>
+				<div class="col-sm-9 form-group">
+					<label for="txtJobRequestName">
+						Título
+					</label>
+					<input type="text" [(ngModel)]="search.JobRequestName" class="form-control" autocomplete="off"
+						placeholder="Título" name="txtJobRequestName" />
+				</div>
+				<div class="col-sm-3 form-group">
+					<label for="txtCompanyID">
+						Empresa
+					</label>
+					<p class="input-group">
+						<input id="typeahead-template" type="text" class="form-control" [(ngModel)]="search.Company"
+							name="CompanyID" [ngbTypeahead]="tableSearch('Company')" [focusFirst]='true'
+							[editable]='false' autocomplete='off' crud-typeahead [displayFieldName]="'CompanyFullName'"
+							placeholder="Empresa" (ngModelChange)="search.CompanyID = search.Company?.CompanyID" />
+						<button type="button" (click)="tableList(search,'Company')" class="btn btn-open">
+							<img src="assets/images/form-list.svg" />
+						</button>
+					</p>
+				</div>
+				<div class="col-sm-4 form-group">
+					<label for="txtJobCategoryID">
+						Categoría Laboral
+					</label>
+					<p class="input-group">
+						<select [(ngModel)]="search.JobCategoryID" class="form-control" autocomplete="off"
+							placeholder="Categoría Laboral" name="txtJobCategoryID">
+							<option [ngValue]=undefined selected> - Todos -</option>
+							<option [value]="T.JobCategoryID"
+								*ngFor="let T of JobCategoryList | orderBy:'JobCategoryName'">{{ T.JobCategoryName }}
+							</option>
+						</select>
+
+					</p>
+				</div>
+				<div class="col-sm-3 form-group">
+					<crud-button-search-reset [crudForm]="this"></crud-button-search-reset>
+				</div>
+			</div>
+		</div>
+
+		<crud-button-new [crudForm]="this"></crud-button-new>
+
+
+
+		<table class="table table-condensed table-bordered table-sm table-hover">
+			<thead class="thead-dark" ngbTooltip="{{recordList?.length}} Registros" data-container="body">
+				<tr>
+					<th>
+						<th-sort text="Código" fieldName="JobRequestID" [(listOrder)]="recordListOrder"></th-sort>
+					</th>
+					<th>
+						<th-sort text="Título" fieldName="JobRequestName" [(listOrder)]="recordListOrder" default="ASC">
+						</th-sort>
+					</th>
+					<th>
+						<th-sort text="Empresa" fieldName="CompanyName" [(listOrder)]="recordListOrder"></th-sort>
+					</th>
+					<th>
+						<th-sort text="Categoría Laboral" fieldName="JobCategoryName" [(listOrder)]="recordListOrder">
+						</th-sort>
+					</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let r of recordList | search:searchText.split(' ')[0] | search:searchText.split(' ')[1] | search:searchText.split(' ')[2] | orderBy:recordListOrder"
+					(click)="viewRecord(r)" [ngClass]="{'table-info': r.JobRequestID === selectedID}">
+					<td class="td-right">{{r.JobRequestID | number:'1.0-0'}}</td>
+					<td>{{r.JobRequestName}}</td>
+					<td>{{r.CompanyName}}</td>
+					<td>{{r.JobCategoryName}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</form>

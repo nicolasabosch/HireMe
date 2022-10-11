@@ -1,0 +1,68 @@
+<form #crudView="ngForm">
+
+    <div class="row" style="margin: 10px;" >
+        
+        <div class="col-md-7 " style="padding: 40px;border-radius: 15px ;  border:solid 2px rgb(199, 191, 191);margin: 40px !important;">
+            <!--
+            <app-registration  ></app-registration>
+            -->
+            <app-nico01></app-nico01>
+        </div>
+        
+        <div class="col-md-4  ">
+            <div class="login-frame">
+                <div class="login-logo">
+                    <img src="assets/images/logo.png" style="width: 100%;">
+
+                </div>
+                <div class="login-container">
+
+                    <h3 style="font-family:Lobster ;" tlt>Acceso usuarios </h3>
+                    <div class="inputs-container">
+                        <div class="form-group">
+                            <label tlt>Usuario</label>
+                            <input tlt placeholder="Usuario" class="form-control" name="user" [(ngModel)]="form.user"
+                                required />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="password" tlt>Contraseña</label>
+                            <input tlt placeholder="Contraseña" class="form-control" name="password" required
+                                [(ngModel)]="form.password" type="password">
+                        </div>
+                        <div class="form-group" *ngIf="crudService.translatable">
+                            <label tlt>Idioma</label>
+
+                            <select [(ngModel)]="form.languageID" class="form-control" autocomplete="off" tlt
+                                placeholder="Idioma" (ngModelChange)="languageChanged(form.languageID)"
+                                name="txLanguageID">
+                                <option [ngValue]="T.LanguageID"
+                                    *ngFor="let T of languageList | orderBy:'LanguageName'">{{
+                                    T.LanguageName }}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="buttons-container">
+                        <button type="submit" class="btn btn-success" [disabled]="!validSubmit()" (click)="login()"
+                            tlt>Ingresar</button>
+                    </div>
+                    <div class="text-sm-center ">
+                        <a style="text-align: center;" routerLink="/ResetPasswordRequest" routerLinkActive="active"
+                            tlt>Olvidé mi
+                            Contraseña</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--
+<a href="/XTool">Vea las herramientas</a>
+-->
+
+
+</form>

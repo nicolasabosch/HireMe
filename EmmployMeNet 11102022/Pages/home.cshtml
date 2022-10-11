@@ -1,0 +1,8 @@
+@page
+@model EmmploymeNet.homeModel
+@{
+    Layout = null;
+    var versionNumber = System.DateTime.Now.ToString("yyyyMMddhhmmss");
+}
+
+@Html.Raw(@Model.html)

@@ -1,0 +1,30 @@
+﻿<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+	<label for="txtMenuBarID" >
+			Código
+		</label>
+		<input type="text" [(ngModel)]="record.MenuBarID" class="form-control" autocomplete="off"  [crud-key]="action"  
+				placeholder="Código" name="txtMenuBarID" />
+</div><div class="col-sm-8 form-group">
+	<label for="txtMenuBarName" >
+			Nombre
+		</label>
+		<input type="text" [(ngModel)]="record.MenuBarName" class="form-control" autocomplete="off"  [crud-required]="action"  
+				placeholder="Nombre" name="txtMenuBarName" />
+</div><div class="col-sm-1 form-group">
+	<label for="txtDisplayOrder" >
+			Orden
+		</label>
+		<input type="text" [(ngModel)]="record.DisplayOrder" class="form-control" autocomplete="off" style="text-align: right" [crud-required]="action" [numeric]="0" 
+				placeholder="Orden" name="txtDisplayOrder" />
+</div>
+		</div>
+
+		
+	</div>
+	
+</form>

@@ -1,0 +1,120 @@
+﻿<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label for="txtMenuItemID">
+					Código
+				</label>
+				<input type="text" [(ngModel)]="record.MenuItemID" class="form-control" autocomplete="off"
+					[crud-key]="action" placeholder="Código" name="txtMenuItemID" />
+			</div>
+			<div class="col-sm-6 form-group">
+				<label for="txtMenuItemName">
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.MenuItemName" class="form-control" autocomplete="off"
+					[crud-required]="action" placeholder="Nombre" name="txtMenuItemName" />
+			</div>
+			<div class="col-sm-3 form-group">
+				<label for="txtMenuBarID">
+					Menú
+				</label>
+				<p class="input-group">
+					<select [(ngModel)]="record.MenuBarID" class="form-control" autocomplete="off"
+						[crud-required]="action" placeholder="Menú" name="txtMenuBarID">
+						<option [ngValue]=undefined selected> - Seleccione -</option>
+						<option [value]="T.MenuBarID" *ngFor="let T of MenuBarList | orderBy:'MenuBarName'">{{
+							T.MenuBarName }}</option>
+					</select>
+
+
+				</p>
+			</div>
+			
+			
+			<div class="col-sm-1 form-group">
+				<label for="txtDisplayOrder">
+					Orden
+				</label>
+				<input type="text" [(ngModel)]="record.DisplayOrder" class="form-control" autocomplete="off"
+					style="text-align: right" [crud-required]="action"  placeholder="Orden"
+					name="txtDisplayOrder" />
+			</div>
+			<div class="col-sm-1 form-group">
+				<label for="txtGroupNumber">
+					Grupo
+				</label>
+				<input type="text" [(ngModel)]="record.GroupNumber" class="form-control" autocomplete="off"
+					style="text-align: right" [crud-required]="action"  placeholder="Grupo"
+					name="txtGroupNumber" />
+			</div>
+			<div class="col-sm-3 form-group">
+				<label for="txtRouteName">
+					Ruta
+				</label>
+				<input type="text" [(ngModel)]="record.RouteName" class="form-control" autocomplete="off"
+					[crud-required]="action" placeholder="Ruta" name="txtRouteName" />
+			</div>
+			<div class="col-sm-1 form-group">
+				<label for="chkIsPage">
+					Es Página
+				</label>
+				<input type="checkbox" [(ngModel)]="record.IsPage" class="form-control form-checkbox" autocomplete="off"
+					[crud-non-required]="action" name="chkIsPage" />
+
+			</div>
+
+
+		</div>
+		<nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Roles</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Rol</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let r of record.Role ; let index=index">
+                                <td style="vertical-align:middle;">{{r.RoleName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-template>
+            </ng-container>
+
+
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Miembros</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+								<th>Rol</th>
+                                <th>Usuario</th>
+                                <th >Activo</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of record.User | orderBy:'UserName' ; let index=index">
+                                <td style="vertical-align:middle;">{{c.RoleName}}</td>
+                                <td style="vertical-align:middle;">{{c.UserName}}</td>
+                                <td style="vertical-align:middle;">{{c.Active===true?'Si':'No'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-template>
+            </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav"></div>
+
+	</div>
+	<!--
+	<audit-view [crudForm]="this"></audit-view>
+	-->
+</form>

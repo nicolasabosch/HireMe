@@ -1,0 +1,18 @@
+﻿<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+		<div class="row">
+			<div class="col-sm-9 form-group">
+	<label for="txtToolName" >
+			Nombre
+		</label>
+		<input type="text" [(ngModel)]="record.ToolName" class="form-control" autocomplete="off"  [crud-required]="action"  
+				placeholder="Nombre" name="txtToolName" />
+</div>
+		</div>
+
+		
+	</div>
+	
+</form>

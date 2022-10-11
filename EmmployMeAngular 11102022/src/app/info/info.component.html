@@ -1,0 +1,8 @@
+<ul *ngFor="let tool of toolList" >
+<li>{{tool.ToolName}}</li>
+</ul>
+
+
+<input type="text" [(ngModel)]="record.ToolName" name="ToolName">
+<button (click)="save()" ></button>
+

@@ -1,0 +1,29 @@
+﻿<form class="form-list">
+    <form-list-header-filter [crudForm]="this"></form-list-header-filter>
+    <div class="form-body">
+        <table class="table table-condensed table-bordered table-sm table-hover">
+            <thead class="thead-dark" ngbTooltip="{{recordList?.length}} Registros" data-container="body">
+                <tr>
+                    <th>
+                        <th-sort text="Código" fieldName="ParameterID" [(listOrder)]="recordListOrder"></th-sort>
+                    </th>
+                    <th>
+                        <th-sort text="Nombre" fieldName="ParameterName" [(listOrder)]="recordListOrder" default="ASC">
+                        </th-sort>
+                    </th>
+                    
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of recordList | search:searchText.split(' ')[0] | search:searchText.split(' ')[1] | search:searchText.split(' ')[2] | orderBy:recordListOrder"
+                    (click)="viewRecord(r)" [ngClass]="{'table-info': r.ParameterID === selectedID}">
+                    <td>{{r.ParameterID}}</td>
+                    <td>{{r.ParameterName}}</td>
+                    
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
