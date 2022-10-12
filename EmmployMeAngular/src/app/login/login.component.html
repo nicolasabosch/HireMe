@@ -25,16 +25,16 @@
                 <h2 class="title">Registrate</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Nombre" />
+                    <input type="text" [(ngModel)]="record.UserName" class="form-control" autocomplete="off"
+            [crud-required]="action" placeholder="Nombre y Apellido" name="txtUserName" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email" [(ngModel)]="record.Email" [crud-required]="action" />
+                    <input type="text" [(ngModel)]="record.Email" class="form-control" autocomplete="off" [crud-required]="action"
+                    placeholder="E Mail" name="txtEmail" />
                 </div>
-                <div class="input-field">
-                    <i class="fas fa-envelope"></i>
-                    <input type="text" placeholder="UserName" [(ngModel)]="record.UserName" [crud-required]="action" />
-                </div>
+                
+                
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Contraseña"[(ngModel)]="record.password" [crud-required]="action" />
