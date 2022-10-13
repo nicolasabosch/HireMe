@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
           this.record.ForceChangePassword = false;
           this.record.Password = "";
           this.record.Active = true;
+          this.record.RoleID="JOBAPPLICANT";
           
           alert("anda el registro");
           this.record.UserRole=[{UserID:this.record.UserID, RoleID: this.record.RoleID }];

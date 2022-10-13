@@ -173,7 +173,7 @@ namespace EmmploymeNet.Controllers
             {
                 db.User.Add(user);
                                 
-                Model.Entities.ProcessChildrenUpdate(db, user.DataTranslation.ToList());
+               
                 try
                 {
                     db.SaveChanges();

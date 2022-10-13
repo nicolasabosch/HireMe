@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 using EmmploymeNet.Model;
 using CabernetDBContext;
 
-namespace EmmploymeNet.ontrollers
+namespace EmmploymeNet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

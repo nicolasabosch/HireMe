@@ -44,11 +44,7 @@
                     <input  type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="record.BirthDate" [crud-required]="action"/>
                 </div>
                 <input type="submit" class="btn" value="Registrate" (click)="register(crudView.valid)" />
-                <span>Solicitar Empleo</span> &nbsp;
-        <input type="radio" [(ngModel)]="record.RoleID" class=" form-checkbox"  value="JOBAPPLICANT" name="RoleID"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                         
-        <span>Dar Empleo</span>&nbsp;
-        <input type="radio" [(ngModel)]="record.RoleID" class=" form-checkbox" value="JOBPOSTER" name="RoleID"/>
+                
                 
             </form>
         </div>
