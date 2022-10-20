@@ -48,14 +48,18 @@ import { registerLocaleData, DatePipe, CurrencyPipe, DecimalPipe, PercentPipe } 
 import localeES from '@angular/common/locales/es';
 import localeEN from '@angular/common/locales/en';
 import localePT from '@angular/common/locales/pt';;
-
-import { InfoComponent } from './info/info.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { Nico01Component } from './login/nico01/nico01.component'
-
 registerLocaleData(localeES, 'es');
 registerLocaleData(localePT, 'pt');
 registerLocaleData(localeEN, 'en');
+
+import { InfoComponent } from './info/info.component';
+import { RegistrationComponent } from './registration/registration.component'
+;
+import { Nico01Component } from './login/nico01/nico01.component'
+import { HomeComponent } from './home/home.component';
+import { JobPostComponent } from './job-post/job-post.component';
+
+
 
 
 
@@ -105,7 +109,7 @@ const appRoutes: Routes = [
   
     { path: 'Role', component: RoleListComponent, data: { animation: 'm' }, canActivate: [AuthGuard] },
     { path: 'Role/:id', component: RoleCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
-  
+    { path: 'JobPost', component: JobPostComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
    
     { path: 'User', component: UserListComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
     { path: 'User/:id', component: UserCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
@@ -122,7 +126,7 @@ const appRoutes: Routes = [
 
     { path: '', redirectTo: 'Login', pathMatch: 'full' },
   
-   
+   {path: 'home', component: HomeComponent, data: { animation: 'home' } },
   
   
   
@@ -162,7 +166,7 @@ JobCategoryListComponent,
     ParameterListComponent,
 
     AppComponent,
-
+    JobPostComponent,
 
     MenuBarCrudComponent,
     MenuBarListComponent,
@@ -170,7 +174,7 @@ JobCategoryListComponent,
     MenuItemListComponent,
     RoleListComponent,
     RoleCrudComponent,
-
+    HomeComponent,
     LoginComponent,
     ChangePasswordComponent,
     GeneratePasswordComponent,
@@ -178,8 +182,10 @@ JobCategoryListComponent,
     
     InfoComponent
 ,
-          RegistrationComponent,
-          Nico01Component
+          RegistrationComponent
+,
+          Nico01Component,
+          JobPostComponent
 
 
   ],
@@ -197,7 +203,7 @@ JobCategoryListComponent,
     ReactiveFormsModule,
     BrowserAnimationsModule,
 
-
+    RouterModule.forRoot(appRoutes),
 
     NgbModule,
     NgxCabernetModule,

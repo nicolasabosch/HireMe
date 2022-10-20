@@ -25,18 +25,18 @@ export abstract class UserComponent extends CrudFormComponent implements OnInit 
 
 
   }
-  sendInvitation(userID: string, ev: Event): void {
-    ev.stopPropagation();
-    this.crudService.get("Api/login/SendInvitation", { userID: userID }).subscribe(data => {
-      if (data != undefined) {
-        this.crudService.showMessage("Atención", "Se ha envíado el mail al usuario", "OK");
-      }
-    });
+  // sendInvitation(userID: string, ev: Event): void {
+  //   ev.stopPropagation();
+  //   this.crudService.get("Api/login/SendInvitation", { userID: userID }).subscribe(data => {
+  //     if (data != undefined) {
+  //       this.crudService.showMessage("Atención", "Se ha envíado el mail al usuario", "OK");
+  //     }
+  //   });
 
 
   }
 
-}
+
 
 @Component({
   selector: 'User-list',

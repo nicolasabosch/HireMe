@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
           this.record.Active = true;
           this.record.RoleID="JOBAPPLICANT";
           
-          alert("anda el registro");
+          
           this.record.UserRole=[{UserID:this.record.UserID, RoleID: this.record.RoleID }];
           this.crudService.addRecord("User", this.record).subscribe(newRecord => {
             this.crudService.get("Api/login/SendInvitation", { userID: this.record.UserID }).subscribe(data => {

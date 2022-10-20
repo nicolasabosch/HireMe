@@ -15,14 +15,7 @@ export class AppComponent {
       this.crudService.baseUrl=environment.webAPIUrl;    
       this.crudService.translatable = environment.translatable;
       
-      if (sessionStorage.getItem("SelectedLanguageID")) {
-        this.crudService.currentLanguageID = <string>sessionStorage.getItem("SelectedLanguageID");
-  
-      }
-      else {
-        sessionStorage.setItem("SelectedLanguageID", this.crudService.defaultLanguageID);
-        this.crudService.currentLanguageID = this.crudService.defaultLanguageID;
-      }
+      
       
       this.crudService.changeLanguage(this.crudService.currentLanguageID, false);
     }

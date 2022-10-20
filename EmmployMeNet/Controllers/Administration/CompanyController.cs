@@ -8,11 +8,13 @@ using System.Web;
 using System.Collections.Specialized;
 using CabernetDBContext;
 using EmmploymeNet.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmmploymeNet.Controllers
 {
     [Route("api/Company")]
     [ApiController]
+    [AllowAnonymous]
     public class CompanyController : ControllerBase
     {
         private readonly Entities db;
