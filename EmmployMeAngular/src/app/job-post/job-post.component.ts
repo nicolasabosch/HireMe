@@ -7,11 +7,7 @@ import { CrudFormComponent } from 'ngx-cabernet';
 })
 export abstract class JobPostComponent extends CrudFormComponent implements OnInit {
   CompanyTypeList: any[];
-<<<<<<< HEAD
-//Un comentarios 
-=======
 //Un comentarios-nicolas
->>>>>>> 55345f817968581ad605ed45acd85422ee993dee
   ngOnInit(): void {
     this.entityName ="JobPost";
     this.identityKey =true;
