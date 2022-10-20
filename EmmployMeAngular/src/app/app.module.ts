@@ -15,6 +15,14 @@ import { RoleListComponent, RoleCrudComponent } from './Security/Role';
 import { TextTranslationComponent } from './Security/TextTranslation';
 import { UserListComponent, UserCrudComponent } from './Security/User';
 
+import { InfoComponent } from './info/info.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { Nico01Component } from './login/nico01/nico01.component'
+import { HomeComponent } from './home/home.component';
+import { JobPostCrudComponent, JobPostListComponent } from './job-post/job-post.component';
+
+
+
 import { NgxCabernetModule } from 'ngx-cabernet';
 import { CustomDateParserFormatter, DatePickerAdapter } from 'ngx-cabernet';
 import { DynamicLocaleService } from 'ngx-cabernet';
@@ -43,6 +51,8 @@ import { NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstr
 
 
 
+
+
 import { registerLocaleData, DatePipe, CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
 
 import localeES from '@angular/common/locales/es';
@@ -52,12 +62,6 @@ registerLocaleData(localeES, 'es');
 registerLocaleData(localePT, 'pt');
 registerLocaleData(localeEN, 'en');
 
-import { InfoComponent } from './info/info.component';
-import { RegistrationComponent } from './registration/registration.component'
-;
-import { Nico01Component } from './login/nico01/nico01.component'
-import { HomeComponent } from './home/home.component';
-import { JobPostComponent } from './job-post/job-post.component';
 
 
 
@@ -109,7 +113,8 @@ const appRoutes: Routes = [
   
     { path: 'Role', component: RoleListComponent, data: { animation: 'm' }, canActivate: [AuthGuard] },
     { path: 'Role/:id', component: RoleCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
-    { path: 'JobPost', component: JobPostComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
+    { path: 'JobPost', component: JobPostListComponent, data: { animation: 'LIS>Tr' }, canActivate: [AuthGuard] },
+    { path: 'JobPost/:id', component: JobPostCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
    
     { path: 'User', component: UserListComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
     { path: 'User/:id', component: UserCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
@@ -127,8 +132,7 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'Login', pathMatch: 'full' },
   
    {path: 'home', component: HomeComponent, data: { animation: 'home' } },
-  
-  
+
   
   
     { path: '**', redirectTo: 'd' }
@@ -148,7 +152,6 @@ CompanyCrudComponent,
 CompanyListComponent,
 CompanyTypeCrudComponent,
 CompanyTypeListComponent,
-
 JobCategoryCrudComponent,
 JobCategoryListComponent,
     
@@ -166,7 +169,8 @@ JobCategoryListComponent,
     ParameterListComponent,
 
     AppComponent,
-    JobPostComponent,
+    JobPostCrudComponent,
+    JobPostListComponent,
 
     MenuBarCrudComponent,
     MenuBarListComponent,
@@ -185,7 +189,7 @@ JobCategoryListComponent,
           RegistrationComponent
 ,
           Nico01Component,
-          JobPostComponent
+          
 
 
   ],

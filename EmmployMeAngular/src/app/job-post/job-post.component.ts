@@ -24,10 +24,10 @@ export abstract class JobPostComponent extends CrudFormComponent implements OnIn
   selector: 'job-post-list',
   templateUrl: 'job-post.component-list.html',
 })
-export class JobPostlistComponent extends JobPostComponent {}
+export class JobPostListComponent extends JobPostComponent {}
 
 @Component({
   selector: 'job-post-crud',
   templateUrl: 'job-post.component-crud.html',
 })
-export class JobPostcrudComponent extends JobPostComponent {}
+export class JobPostCrudComponent extends JobPostComponent {}
