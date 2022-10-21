@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CabernetDBContext;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CabernetDBContext;
+using System;
+using System.Collections.Generic;
 
 namespace EmmploymeNet.Model
 {
     public partial class MenuBar  : IEntityRecord
     {
-        [Key]
-        [StringLength(36)]
+        public MenuBar()
+        {
+            MenuItem = new HashSet<MenuItem>();
+        }
+
 
         
         public string MenuBarID { get; set; }
-        [Required]
-        [StringLength(100)]
 
         
         public string MenuBarName { get; set; }
@@ -24,7 +25,6 @@ namespace EmmploymeNet.Model
 
         
         public DateTimeOffset? CreatedOn { get; set; }
-        [StringLength(200)]
 
         
         public string CreatedBy { get; set; }
@@ -32,18 +32,21 @@ namespace EmmploymeNet.Model
         [ConcurrencyCheck]
 
         public DateTimeOffset? LastModifiedOn { get; set; }
-        [StringLength(200)]
 
         
         public string LastModifiedBy { get; set; }
 
+        public virtual ICollection<MenuItem> MenuItem { get; set; }
+
         [NotMapped]
     	public string EntityStatus { get; set; }
-    
+
     	[NotMapped]
-    	public Dictionary<string, object> OriginalValues { get; set; }
-           
-        [NotMapped]
-    	public virtual ICollection<DataTranslation> DataTranslation { get; set; }
-    }
-}
+    	public Dictionary<string, object>
+    OriginalValues { get; set; }
+
+    [NotMapped]
+    public virtual ICollection<DataTranslation>
+        DataTranslation { get; set; }
+        }
+        }

@@ -6,17 +6,23 @@ import { CrudFormComponent } from 'ngx-cabernet';
   template: ''
 })
 export abstract class JobPostComponent extends CrudFormComponent implements OnInit {
-  CompanyTypeList: any[];
-//Un comentarios-nicolasxx
+  
+  JobCategoryList: any[];
+  JobCategorySkillList: any[];
+
   ngOnInit(): void {
     this.entityName ="JobPost";
     this.identityKey =true;
-    this.fillRecordListOnInit = false;
-    
+    this.fillRecordListOnInit = true;
+
+    this.setCheckList("JobPostSkill", "JobCategorySkillList", "JobCategorySkillID");
+
     this.referenceData.push(
-      	{url: 'Api/JobPost', listName: 'job-post-list' },
+      {url: 'Api/JobCategory', listName: 'JobCategoryList' },
+      {url: 'Api/JobCategorySkill', listName: 'JobCategorySkillList' },
 
     );
+    this.title="Publicar Ofertas";
   }
 }
 

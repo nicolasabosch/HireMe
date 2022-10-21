@@ -1,4 +1,7 @@
-﻿{{> imports}}
+﻿using CabernetDBContext;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+{{> imports}}
 {{my-helper}}
 namespace {{namespace}}
 {
@@ -7,18 +10,20 @@ namespace {{namespace}}
 {{/if}}
     public partial class {{class}} {{implements}}
     {
-        {{{> constructor}}}
-        {{{> properties}}}
+{{{> constructor}}}
+{{{> properties}}}
 
         [NotMapped]
     	public string EntityStatus { get; set; }
-    
+
     	[NotMapped]
-    	public Dictionary<string, object> OriginalValues { get; set; }
-           
-        {{#not-DataTranslation}}
-        [NotMapped]
-    	public virtual ICollection<DataTranslation> DataTranslation { get; set; }
+    	public Dictionary<string, object>
+    OriginalValues { get; set; }
+
+    {{#not-DataTranslation}}
+    [NotMapped]
+    public virtual ICollection<DataTranslation>
+        DataTranslation { get; set; }
         {{/not-DataTranslation}}
-    }
-}
+        }
+        }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CabernetDBContext;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CabernetDBContext;
+using System;
+using System.Collections.Generic;
 
 namespace EmmploymeNet.Model
 {
@@ -10,33 +10,20 @@ namespace EmmploymeNet.Model
     {
         public User()
         {
+            JobPost = new HashSet<JobPost>();
             JobRequestUser = new HashSet<JobRequestUser>();
             UserRole = new HashSet<UserRole>();
         }
 
-        [Key]
-        [StringLength(36)]
 
         
         public string UserID { get; set; }
-        [Required]
-        [StringLength(100)]
 
         
         public string LogonName { get; set; }
 
-
-
-        
-
-
-        [Required]
-        [StringLength(100)]
-
         
         public string Password { get; set; }
-        [Required]
-        [StringLength(100)]
 
         
         public string UserName { get; set; }
@@ -47,9 +34,7 @@ namespace EmmploymeNet.Model
         
         public bool? ForceChangePassword { get; set; }
 
-
-        [Required]
-        [StringLength(200)]
+        
         public string Email { get; set; }
 
         
@@ -57,27 +42,21 @@ namespace EmmploymeNet.Model
 
         
         public bool ReceiveNotification { get; set; }
-        [StringLength(36)]
 
         
         public string ResetPasswordID { get; set; }
 
         
         public DateTimeOffset? InvitedOn { get; set; }
-        [Required]
-        [StringLength(36)]
 
         
         public string UserTypeID { get; set; }
-        [StringLength(10)]
 
         
         public string ZipCode { get; set; }
-        [Column(TypeName = "date")]
 
         
         public DateTime? BirthDate { get; set; }
-        [StringLength(36)]
 
         
         public string FileID { get; set; }
@@ -87,7 +66,6 @@ namespace EmmploymeNet.Model
 
         
         public DateTimeOffset? CreatedOn { get; set; }
-        [StringLength(200)]
 
         
         public string CreatedBy { get; set; }
@@ -95,32 +73,26 @@ namespace EmmploymeNet.Model
         [ConcurrencyCheck]
 
         public DateTimeOffset? LastModifiedOn { get; set; }
-        [StringLength(200)]
 
         
         public string LastModifiedBy { get; set; }
 
-        [ForeignKey(nameof(CompanyID))]
-        [InverseProperty("User")]
         public virtual Company Company { get; set; }
-        [ForeignKey(nameof(FileID))]
-        [InverseProperty("User")]
         public virtual File File { get; set; }
-        [ForeignKey(nameof(UserTypeID))]
-        [InverseProperty("User")]
         public virtual UserType UserType { get; set; }
-        [InverseProperty("User")]
+        public virtual ICollection<JobPost> JobPost { get; set; }
         public virtual ICollection<JobRequestUser> JobRequestUser { get; set; }
-        [InverseProperty("User")]
         public virtual ICollection<UserRole> UserRole { get; set; }
 
         [NotMapped]
     	public string EntityStatus { get; set; }
-    
+
     	[NotMapped]
-    	public Dictionary<string, object> OriginalValues { get; set; }
-           
-        [NotMapped]
-    	public virtual ICollection<DataTranslation> DataTranslation { get; set; }
-    }
-}
+    	public Dictionary<string, object>
+    OriginalValues { get; set; }
+
+    [NotMapped]
+    public virtual ICollection<DataTranslation>
+        DataTranslation { get; set; }
+        }
+        }

@@ -6,29 +6,17 @@ using System.Collections.Generic;
 
 namespace EmmploymeNet.Model
 {
-    public partial class File  : IEntityRecord
+    public partial class JobPostSkill  : IEntityRecord
     {
-        public File()
-        {
-            JobRequestFile = new HashSet<JobRequestFile>();
-            User = new HashSet<User>();
-        }
-
 
         
-        public string FileID { get; set; }
+        public int JobPostID { get; set; }
 
         
-        public string FileName { get; set; }
+        public int JobCategorySkillID { get; set; }
 
         
-        public string FolderName { get; set; }
-
-        
-        public DateTimeOffset? FileDate { get; set; }
-
-        
-        public int? FileSize { get; set; }
+        public string Remarks { get; set; }
 
         
         public DateTimeOffset? CreatedOn { get; set; }
@@ -43,8 +31,8 @@ namespace EmmploymeNet.Model
         
         public string LastModifiedBy { get; set; }
 
-        public virtual ICollection<JobRequestFile> JobRequestFile { get; set; }
-        public virtual ICollection<User> User { get; set; }
+        public virtual JobCategorySkill JobCategorySkill { get; set; }
+        public virtual JobPost JobPost { get; set; }
 
         [NotMapped]
     	public string EntityStatus { get; set; }
