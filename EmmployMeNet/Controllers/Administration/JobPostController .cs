@@ -178,6 +178,7 @@ namespace EmmploymeNet.Controllers
                     JobApplicance.JobPostID,
                     JobApplicance.UserID,
                     User.UserName,
+                    User.Email,
                     JobApplicance.JobApplicanceStatusID,
                     JobApplicance.JobApplicanceText,
                     JobApplicance.JobApplicanceFileID,
@@ -394,6 +395,55 @@ namespace EmmploymeNet.Controllers
 
             return CreatedAtAction("ApplyJobPost", new { id = jobApplicance.JobApplicanceID }, jobApplicance);
         }
+
+        [HttpGet]
+        [Route("MyOpportunity")]
+        public ActionResult MyOpportunity()
+        {
+
+            var currentUserID = this.CurrentUserID();
+
+            NameValueCollection parameters = HttpUtility.ParseQueryString(this.Request.QueryString.Value);
+            var languageID = this.CurrentLanguageID();
+            var previewList = new[] { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
+            var list = (
+                from JobPost in db.JobPost
+                join User in db.User on JobPost.UserID equals User.UserID
+                join JobCategory in db.JobCategory on JobPost.JobCategoryID equals JobCategory.JobCategoryID
+                join JobPostStatus in db.JobPostStatus on JobPost.JobPostStatusID equals JobPostStatus.JobPostStatusID
+                join JobApplicance in db.JobApplicance on JobPost.JobPostID equals JobApplicance.JobPostID
+                from JobApplicanceStatus in db.JobApplicanceStatus.Where(X => X.JobApplicanceStatusID == JobApplicance.JobApplicanceStatusID).DefaultIfEmpty()
+
+                where JobApplicance.UserID == currentUserID
+                select new
+                {
+                    JobPost.JobPostID,
+                    JobPost.JobPostName,
+                    JobPost.JobPostDate,
+                    JobPost.UserID,
+                    User.UserName,
+                    JobPost.JobCategoryID,
+                    JobCategory.JobCategoryName,
+                    JobPost.JobPostStatusID,
+                    JobPostStatus.JobPostStatusName,
+                    JobApplicance.JobApplicanceID,
+                    ApplicanceDate = JobApplicance.CreatedOn,
+                    JobApplicanceStatus.JobApplicanceStatusName
+
+                }
+
+            );
+            if (parameters["key"] != null)
+            {
+                int key = int.Parse(parameters["key"]);
+                list = list.Where(l => l.JobPostID == key);
+            }
+
+
+            var ret = list.AsEnumerable();
+            return Ok(ret);
+        }
+
 
 
         private bool JobPostExists(int id)

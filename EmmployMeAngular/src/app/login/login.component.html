@@ -26,19 +26,20 @@
                 <div class="input-field">
                     <i class="fas fa-user"></i>
                     <input type="text" [(ngModel)]="record.UserName" class="form-control" autocomplete="off"
-            [crud-required]="action" placeholder="Nombre y Apellido" name="txtUserName" />
+                  placeholder="Nombre y Apellido" name="txtUserName" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" [(ngModel)]="record.Email" class="form-control" autocomplete="off" [crud-required]="action"
+                    <input type="text" [(ngModel)]="record.Email" class="form-control" autocomplete="off" 
                     placeholder="E Mail" name="txtEmail" />
                 </div>
                 
-                
+                <!--
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Contraseña"[(ngModel)]="record.password" [crud-required]="action" />
                 </div>
+                -->                
                 <div class="input-field">
                     <i class="fas fa-calendar"></i>
                     <input  type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="record.BirthDate" [crud-required]="action"/>
@@ -55,13 +56,13 @@
             <div class="content">
                 <h3>¿Sos nuevo en emmployme?</h3>
                 <p>
-                    ¿Querés ser parte de la revolución del empleo joven? Registrate y conseguí tu primer trabajo.
+                    Employme es una iniciativa muy útil, sobre todo para jóvenes que están empezando a buscar trabajo y no saben por dónde empezar. La plataforma les permite ponerse en contacto directo con empresas
                 </p>
                 <button class="btn transparent" id="sign-up-btn" (click)="signUpClicked()">
                     Registrate
                 </button>
             </div>
-            <img src="assets/Imagenes/Logo.jpg" class="image" alt="" />
+            <img src="assets/Imagenes/animations.gif" class="image" alt="" />
         </div>
         <div class="panel right-panel">
             <div class="content">
@@ -73,7 +74,7 @@
                     Inicia Sesión
                 </button>
             </div>
-            <img src="assets/Imagenes/Logo.jpg" class="image" alt="" />
+            <img src="assets/Imagenes/animationsregister.gif" class="image" alt="" />
         </div>
     </div>
 </div>

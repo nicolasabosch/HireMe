@@ -21,6 +21,7 @@ import { Nico01Component } from './login/nico01/nico01.component'
 import { HomeComponent } from './home/home.component';
 import { JobPostCrudComponent, JobPostListComponent } from './job-post/job-post.component';
 import { JobOpportunityCrudComponent, JobOpportunityListComponent } from './job-opportunity/job-opportunity.component';
+import { MyOpportunityCrudComponent, MyOpportunityListComponent } from './my-opportunity/my-opportunity.component';
 
 
 
@@ -92,6 +93,7 @@ const appRoutes: Routes = [
 { path: 'JobCategory', component: JobCategoryListComponent, data: { animation: 'JobCategory' }, canActivate: [AuthGuard] },
 { path: 'JobCategory/:id', component: JobCategoryCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
 
+
     
     { path: 'TextTranslation', component: TextTranslationComponent, data: { animation: 'TextTranslation' }, canActivate: [AuthGuard] },
     { path: 'DataTranslation', component: DataTranslationComponent, data: { animation: 'DataTranslation' }, canActivate: [AuthGuard] },
@@ -120,6 +122,9 @@ const appRoutes: Routes = [
 
     { path: 'JobOpportunity', component: JobOpportunityListComponent, data: { animation: 'LIST' }, canActivate: [AuthGuard] },
     { path: 'JobOpportunity/:id', component: JobOpportunityCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
+
+    { path: 'MyOpportunity', component: MyOpportunityListComponent, data: { animation: 'LIST' }, canActivate: [AuthGuard] },
+    { path: 'MyOpportunity/:id', component: MyOpportunityCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
 
 
     { path: 'User', component: UserListComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
@@ -180,6 +185,8 @@ JobCategoryListComponent,
 
     JobOpportunityCrudComponent,
     JobOpportunityListComponent,
+    MyOpportunityCrudComponent,
+    MyOpportunityListComponent,
 
     MenuBarCrudComponent,
     MenuBarListComponent,

@@ -2,12 +2,12 @@ import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { CrudFormComponent } from 'ngx-cabernet';
 
 @Component({
-  selector: 'job-opportunity',
+  selector: 'my-opportunity',
   template: ''
 })
-export abstract class JobOpportunityComponent extends CrudFormComponent implements OnInit, AfterViewInit {
+export abstract class MyOpportunityComponent extends CrudFormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
-    this.title = "Busca tu trabajo ideal";
+    this.title = "Ver mis aplicaciones";
   }
 
   JobCategoryList: any[];
@@ -15,12 +15,13 @@ export abstract class JobOpportunityComponent extends CrudFormComponent implemen
   JobCategorySkillList: any[];
   JobApplicanceStatusList: any[];
   applicance: any = {};
+  
 
   ngOnInit(): void {
-    this.endPointSearchList = "JobPost/OpenedJobPost"
+    this.endPointSearchList = "JobPost/MyOpportunity"
     this.entityName = "JobPost";
     this.identityKey = true;
-    this.fillRecordListOnInit = false;
+    this.fillRecordListOnInit = true;
     this.addeable = false;
     this.deleteable = false;
     this.editable = false;
@@ -65,13 +66,13 @@ export abstract class JobOpportunityComponent extends CrudFormComponent implemen
 }
 
 @Component({
-  selector: 'job-opportunity-list',
-  templateUrl: 'job-opportunity.component-list.html',
+  selector: 'my-opportunity-list',
+  templateUrl: 'my-opportunity.component-list.html',
 })
-export class JobOpportunityListComponent extends JobOpportunityComponent { }
+export class MyOpportunityListComponent extends MyOpportunityComponent { }
 
 @Component({
-  selector: 'job-opportunity-crud',
-  templateUrl: 'job-opportunity.component-crud.html',
+  selector: 'my-opportunity-crud',
+  templateUrl: 'my-opportunity.component-crud.html',
 })
-export class JobOpportunityCrudComponent extends JobOpportunityComponent { }
+export class MyOpportunityCrudComponent extends MyOpportunityComponent { }

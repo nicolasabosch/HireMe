@@ -103,6 +103,8 @@
                             data-container="body">
                             <th>Fecha</th>
                             <th>Postulante</th>
+                            <th>Email</th>
+                            
                             <th>Carta de Presentación</th>
                             <th>Archivo</th>
                             <th>Estado</th>
@@ -112,6 +114,7 @@
                             <tr *ngFor="let r of record.JobApplicance | orderBy:JobApplicanceID">
                                 <td>{{r.ApplicanceDate | date:'dd/MM/yyyy'}}</td>
                                 <td>{{r.UserName}}</td>
+                                <td>{{r.Email}}</td>
                                 <td>{{r.JobApplicanceText}}</td>
                                 <td>
 

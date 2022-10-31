@@ -7,7 +7,7 @@ import { CrudFormComponent } from 'ngx-cabernet';
 })
 export abstract class JobPostComponent extends CrudFormComponent implements OnInit ,AfterViewInit {
   ngAfterViewInit(): void {
-    this.title="Publicar Ofertas";  
+    this.title="Publicar empleo";  
   }
   
   JobCategoryList: any[];

@@ -1,17 +1,5 @@
-<!--
-<div class="container-fluid" style="padding-right: 0px;padding-left:0px;">
-  <app-menu2 *ngIf="isLogedIn() && crudService.user.UserTypeID ==='INTERNAL'"></app-menu2>
-
-  <div *ngIf="isLogedIn() && crudService.user.UserTypeID ==='EXTERNAL'">
-    <button routerLink="/Home" class="btn bnt-sucess">Inicio</button>
-    <button routerLink="/JobOpportunity" class="btn bnt-sucess">Oportunidades Laborales</button>
-    <button routerLink="/JobPost" class="btn bnt-sucess">Publicar Oferta</button>
-    <a class="dropdown-item" (click)="logout()">Cerrar Sesion</a>
-  </div>
-</div>
--->
 <app-menu2 *ngIf="isLogedIn()"></app-menu2>
-<div class="container-fluid" style="padding-right: 0px;padding-left:0px;">
+<div class="container-fluid" style="padding-right: 0px;padding-left:0px;margin: 0px;">
   <div [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
