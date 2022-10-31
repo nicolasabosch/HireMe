@@ -42,7 +42,7 @@
                 -->                
                 <div class="input-field">
                     <i class="fas fa-calendar"></i>
-                    <input  type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="record.BirthDate" [crud-required]="action"/>
+                    <input  type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="record.BirthDate" />
                 </div>
                 <input type="submit" class="btn" value="Registrate" (click)="register(crudView.valid)" />
                 

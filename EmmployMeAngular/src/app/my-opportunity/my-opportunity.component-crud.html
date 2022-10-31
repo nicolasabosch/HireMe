@@ -81,7 +81,7 @@
             </thead>
             <tbody>
                 <tr
-                    *ngFor="let c of record.JobPostSkill | filter:{'JobCategoryID':record.JobCategoryID} ; let index=index">
+                    *ngFor="let c of record.JobPostSkill | filter:{Checked:true} | filter:{'JobCategoryID':record.JobCategoryID} ; let index=index">
                     <td><input type="checkbox" [(ngModel)]="c.Checked" class="form-control" [crud-non-required]="action"
                             [name]="'JobPostSkillChecked' + index" /></td>
                     <td style="vertical-align:middle;">{{c.JobCategorySkillName}}</td>
@@ -111,12 +111,14 @@
                     (change)="uploadFile($event,applicance,'JobApplicanceFileID')" />
                 <a target="_blank"
                     href="{{baseUrl}}Api/file/{{applicance.JobApplicanceFileID}}">{{applicance.FileName}}</a>
+
+                    <div class="form-control-disable" style="font-weight:bold ;" *ngIf="applicance.JobApplicanceStatusID">{{applicance.JobApplicanceStatusName}}</div>
+                    <button class="btn btn-info" (click)="Apply()" *ngIf="!applicance.JobApplicanceStatusID" >Aplicar</button>
+    
             </div>
 
 
-            <div class="form-control-disable" style="font-weight:bold ;" *ngIf="applicance.JobApplicanceStatusID">{{applicance.JobApplicanceStatusName}}</div>
-                <button class="btn btn-info" (click)="Apply()" *ngIf="!applicance.JobApplicanceStatusID" >Aplicar</button>
-
+          
         </div>
 
 
