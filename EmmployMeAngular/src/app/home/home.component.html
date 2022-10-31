@@ -1,23 +1,11 @@
-<h1>aa</h1>
-<input type="text" [(ngModel)]="searchText">
-<!-- <pre>{{recordList|json}}</pre> -->
-<div class="containter">
-    <table class="table table-bordered">
-        <thead><tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-              
 
-        </tr></thead>
-        <tbody>
-            <tr *ngFor="let x of recordList | search:searchText:['CompanyName','CompanyID']  | orderBy:'CompanyName'" >
+<div style="padding:40px ;">
+Pone algo aca
 
-                <td>{{x.CompanyName}}</td>
-                <td>{{x.CompanyID}}</td>
-
-
-
-            </tr>
-        </tbody>
-    </table>
+<br/>
+<br/>
+<button routerLink="/JobOpportunity" class="btn btn-success">Oportunidades Laborales</button>
+<br>
+<br/>
+<button routerLink="/JobPost" class="btn btn-warning">Publicar Oferta</button>
 </div>

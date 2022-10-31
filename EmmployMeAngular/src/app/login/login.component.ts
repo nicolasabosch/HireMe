@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { CrudService,DynamicLocaleService } from 'ngx-cabernet';
+import { CrudService, DynamicLocaleService } from 'ngx-cabernet';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +11,7 @@ import { CrudService,DynamicLocaleService } from 'ngx-cabernet';
 
 
 export class LoginComponent implements OnInit {
-    
+
     record: any = {};
     action: string = "Adding";
     languageList: any[];
@@ -20,17 +20,17 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private DynamicLocaleService: DynamicLocaleService) {
         this.form = {};
-        
+
         this.form.user = "";
         this.form.password = "";
-        
-        
-        
+
+
+
     }
-    
-    
+
+
     ngOnInit(): void {
-        
+
         this.crudService.setPageTitle(this.crudService.translate("Ingreso"));
         this.crudService.getRecordList("Language", {}).subscribe(data => {
             this.languageList = data;
@@ -38,58 +38,56 @@ export class LoginComponent implements OnInit {
             this.form.languageID = this.crudService.currentLanguageID;
             this.form.user = "";
             this.form.password = "";
-            
+
         })
 
     }
 
-   mode:string="";
+    mode: string = "";
 
-    signInClicked():void
-    {
-        this.mode="";
+    signInClicked(): void {
+        this.mode = "";
 
     }
-    signUpClicked():void
-    {
-        this.mode="sign-up-mode";
+    signUpClicked(): void {
+        this.mode = "sign-up-mode";
     }
 
     languageChanged(languageID: string): void {
-        
-        this.crudService.changeLanguage(languageID,false);
+
+        this.crudService.changeLanguage(languageID, false);
 
     }
-    
+
 
     validSubmit(): boolean {
         return (this.form.user && this.form.password);
     }
     register(isValid: boolean): void {
         if (!isValid) {
-          this.crudService.showMessage("Atención", "Por favor complete todos los campos !", "Aceptar");
+            this.crudService.showMessage("Atención", "Por favor complete todos los campos !", "Aceptar");
         }
         else {
-          this.record.UserID = this.crudService.newGuid();
-          this.record.UserTypeID = 'EXTERNAL';
-          this.record.LogonName = this.record.Email;
-          this.record.ForceChangePassword = false;
-          this.record.Password = "";
-          this.record.Active = true;
-          this.record.RoleID="JOBAPPLICANT";
-          
-          
-          this.record.UserRole=[{UserID:this.record.UserID, RoleID: this.record.RoleID }];
-          this.crudService.addRecord("User", this.record).subscribe(newRecord => {
-            this.crudService.get("Api/login/SendInvitation", { userID: this.record.UserID }).subscribe(data => {
-              if (data != undefined) {
-                this.crudService.showMessage("Atención", "Felicitaciones ya estás registrado !", "Aceptar");
-              }
+            this.record.UserID = this.crudService.newGuid();
+            this.record.UserTypeID = 'EXTERNAL';
+            this.record.LogonName = this.record.Email;
+            this.record.ForceChangePassword = false;
+            this.record.Password = "";
+            this.record.Active = true;
+            this.record.RoleID = "JOBAPPLICANT";
+
+
+            this.record.UserRole = [{ UserID: this.record.UserID, RoleID: this.record.RoleID }];
+            this.crudService.addRecord("User", this.record).subscribe(newRecord => {
+                this.crudService.get("Api/login/SendInvitation", { userID: this.record.UserID }).subscribe(data => {
+                    if (data != undefined) {
+                        this.crudService.showMessage("Atención", "Felicitaciones ya estás registrado !", "Aceptar");
+                    }
+                });
+
+
+
             });
-        
-    
-            
-          });
         }
     }
 
@@ -103,15 +101,21 @@ export class LoginComponent implements OnInit {
                         this.crudService.query("Api/Login", {}).subscribe(data => {
                             this.crudService.UserMenuList = data;
                             sessionStorage.removeItem("state");
-                            var firstMenuItem = data.filter(function (e) { return e.IsPage === true })[0].RouteName;
-                            this.router.navigateByUrl(firstMenuItem);
+                            if (this.crudService.user.UserTypeID === "EXTERNAL") {
+                                this.router.navigateByUrl("Home");
+                            }
+                            else {
+
+                                var firstMenuItem = data.filter(function (e) { return e.IsPage === true })[0].RouteName;
+                                this.router.navigateByUrl(firstMenuItem);
+                            }
                         })
 
 
                     }
                 );
 
-                
+
         }
     }
 }

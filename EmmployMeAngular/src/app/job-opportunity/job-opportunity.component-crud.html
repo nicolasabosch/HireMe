@@ -1,0 +1,125 @@
+<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+        <div class="row">
+            <div class="col-sm-2 form-group">
+                <label for="txtjobPostDate">
+                    Fecha
+                </label>
+                <p class="input-group">
+                    <input type="text" ngbDatepicker #txtjobPostDate="ngbDatepicker" style="max-width:120px"
+                        [(ngModel)]="record.JobPostDate" [crud-required]="action" name="txtJobPostDate"
+                        class="form-control" onfocus="blur();">
+
+                    <span (click)="txtjobPostDate.toggle()" class="btn btn-outline-secondary" style="cursor: pointer;"
+                        crud-show-c-u="{{action}}" tabindex="-1">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="col-sm-9 form-group">
+                <label for="txtJobPostName">
+                    Título
+                </label>
+                <input type="text" [(ngModel)]="record.JobPostName" class="form-control" autocomplete="off"
+                    [crud-required]="action" placeholder="Título" name="txtJobPostName" />
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="txaJobPostDescription">
+                    Descripción
+                </label>
+                <textarea [(ngModel)]="record.JobPostDescription" class="form-control" autocomplete="off"
+                    [crud-required]="action" rows="3" placeholder="Descripción" name="txaJobPostDescription"></textarea>
+
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtJobCategoryID">
+                    Categoría Laboral
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.JobCategoryID" class="form-control" autocomplete="off"
+                        [crud-required]="action" placeholder="Categoría Laboral" name="txtJobCategoryID">
+                        <option [ngValue]=undefined selected> - Seleccione -</option>
+                        <option [value]="T.JobCategoryID" *ngFor="let T of JobCategoryList | orderBy:'JobCategoryName'">
+                            {{ T.JobCategoryName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtJobPostStatusID">
+                    Estado
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.JobPostStatusID" class="form-control" autocomplete="off"
+                        [crud-required]="action" placeholder="Estado" name="txtJobPostStatusID">
+                        <option [ngValue]=undefined selected> - Seleccione -</option>
+                        <option [value]="T.JobPostStatusID"
+                            *ngFor="let T of JobPostStatusList | orderBy:'JobPostStatusName'">
+                            {{ T.JobPostStatusName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="min-width:56px">
+                        <div [crud-show-c-u]="action">
+                            <check-uncheck [list]="record.JobPostSkill"></check-uncheck>
+                        </div>
+                    </th>
+                    <th style="width:100%">Habilidades</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let c of record.JobPostSkill | filter:{'JobCategoryID':record.JobCategoryID} ; let index=index">
+                    <td><input type="checkbox" [(ngModel)]="c.Checked" class="form-control" [crud-non-required]="action"
+                            [name]="'JobPostSkillChecked' + index" /></td>
+                    <td style="vertical-align:middle;">{{c.JobCategorySkillName}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+
+            <div class="col-sm-12 form-group">
+                <label>
+                    Carta de Presentación
+                </label>
+                <textarea [(ngModel)]="applicance.JobApplicanceText" class="form-control" row="6"
+                [disabled]="applicance.JobApplicanceStatusID"
+                    name="JobApplicanceText"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 form-group">
+
+
+                <label [for]="'JobApplicanceFileID'" class="btn btn-oil" *ngIf="!applicance.JobApplicanceStatusID">
+                    <i class="fas fa-upload"></i>&nbsp;&nbsp;<span>Subir Archivo</span>
+                </label>
+                <input type="file" [name]="'JobApplicanceFileID'" [id]="'JobApplicanceFileID'"
+                    (change)="uploadFile($event,applicance,'JobApplicanceFileID')" />
+                <a target="_blank"
+                    href="{{baseUrl}}Api/file/{{applicance.JobApplicanceFileID}}">{{applicance.FileName}}</a>
+            </div>
+
+
+            <div class="form-control-disable" *ngIf="applicance.JobApplicanceStatusID">{{applicance.JobApplicanceStatusName}}</div>
+                <button class="btn btn-info" (click)="Apply()" *ngIf="!applicance.JobApplicanceStatusID" >Aplicar</button>
+
+        </div>
+
+
+    </div>
+
+</form>

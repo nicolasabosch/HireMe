@@ -20,6 +20,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { Nico01Component } from './login/nico01/nico01.component'
 import { HomeComponent } from './home/home.component';
 import { JobPostCrudComponent, JobPostListComponent } from './job-post/job-post.component';
+import { JobOpportunityCrudComponent, JobOpportunityListComponent } from './job-opportunity/job-opportunity.component';
 
 
 
@@ -113,9 +114,14 @@ const appRoutes: Routes = [
   
     { path: 'Role', component: RoleListComponent, data: { animation: 'm' }, canActivate: [AuthGuard] },
     { path: 'Role/:id', component: RoleCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
-    { path: 'JobPost', component: JobPostListComponent, data: { animation: 'LIS>Tr' }, canActivate: [AuthGuard] },
+    { path: 'JobPost', component: JobPostListComponent, data: { animation: 'LIST' }, canActivate: [AuthGuard] },
     { path: 'JobPost/:id', component: JobPostCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
    
+
+    { path: 'JobOpportunity', component: JobOpportunityListComponent, data: { animation: 'LIST' }, canActivate: [AuthGuard] },
+    { path: 'JobOpportunity/:id', component: JobOpportunityCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
+
+
     { path: 'User', component: UserListComponent, data: { animation: 'User' }, canActivate: [AuthGuard] },
     { path: 'User/:id', component: UserCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
   
@@ -131,7 +137,7 @@ const appRoutes: Routes = [
 
     { path: '', redirectTo: 'Login', pathMatch: 'full' },
   
-   {path: 'home', component: HomeComponent, data: { animation: 'home' } },
+   {path: 'Home', component: HomeComponent, data: { animation: 'home' } },
 
   
   
@@ -171,6 +177,9 @@ JobCategoryListComponent,
     AppComponent,
     JobPostCrudComponent,
     JobPostListComponent,
+
+    JobOpportunityCrudComponent,
+    JobOpportunityListComponent,
 
     MenuBarCrudComponent,
     MenuBarListComponent,

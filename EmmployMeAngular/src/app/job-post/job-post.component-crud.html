@@ -3,29 +3,21 @@
 
     <div class="form-body">
         <div class="row">
-            <div class="col-sm-1 form-group">
-                <label for="txtJobPostID">
-                    Código
-                </label>
-                <input type="text" [(ngModel)]="record.JobPostID" class="form-control" autocomplete="off"
-                    style="text-align: right" [crud-db-generated]="action" numeric="0" placeholder="Código"
-                    name="txtJobPostID" />
-            </div>
             <div class="col-sm-2 form-group">
-				<label for="txtjobPostDate">
-					Fecha
-				</label>
-				<p class="input-group">
-					<input type="text" ngbDatepicker #txtjobPostDate="ngbDatepicker" style="max-width:120px"
-						[(ngModel)]="record.JobPostDate" [crud-required]="action" name="txtJobPostDate" class="form-control"
-						onfocus="blur();">
+                <label for="txtjobPostDate">
+                    Fecha
+                </label>
+                <p class="input-group">
+                    <input type="text" ngbDatepicker #txtjobPostDate="ngbDatepicker" style="max-width:120px"
+                        [(ngModel)]="record.JobPostDate" [crud-required]="action" name="txtJobPostDate"
+                        class="form-control" onfocus="blur();">
 
-					<span (click)="txtjobPostDate.toggle()" class="btn btn-outline-secondary" style="cursor: pointer;"
-						crud-show-c-u="{{action}}" tabindex="-1">
-						<i class="far fa-calendar-alt"></i>
-					</span>
-				</p>
-			</div>
+                    <span (click)="txtjobPostDate.toggle()" class="btn btn-outline-secondary" style="cursor: pointer;"
+                        crud-show-c-u="{{action}}" tabindex="-1">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+                </p>
+            </div>
 
             <div class="col-sm-9 form-group">
                 <label for="txtJobPostName">
@@ -39,8 +31,7 @@
                     Descripción
                 </label>
                 <textarea [(ngModel)]="record.JobPostDescription" class="form-control" autocomplete="off"
-                    [crud-required]="action" rows="3" placeholder="Descripción"
-                    name="txaJobPostDescription"></textarea>
+                    [crud-required]="action" rows="3" placeholder="Descripción" name="txaJobPostDescription"></textarea>
 
             </div>
             <div class="col-sm-4 form-group">
@@ -58,127 +49,97 @@
 
                 </p>
             </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtJobPostStatusID">
+                    Estado
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.JobPostStatusID" class="form-control" autocomplete="off"
+                        [crud-required]="action" placeholder="Estado" name="txtJobPostStatusID">
+                        <option [ngValue]=undefined selected> - Seleccione -</option>
+                        <option [value]="T.JobPostStatusID"
+                            *ngFor="let T of JobPostStatusList | orderBy:'JobPostStatusName'">
+                            {{ T.JobPostStatusName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
         </div>
-
-        <table class="table table-bordered table-striped table-sm">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="min-width:56px">
-                        <div [crud-show-c-u]="action">
-                            <check-uncheck [list]="record.JobPostSkill"></check-uncheck>
-                        </div>
-                    </th>
-                    <th style="width:100%">Habilidades</th>
-                    <th style="width:100%">Comentario</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let c of record.JobPostSkill | filter:{'JobCategoryID':record.JobCategoryID} ; let index=index">
-                    <td><input type="checkbox" [(ngModel)]="c.Checked" class="form-control"
-                            [crud-non-required]="action" [name]="'JobPostSkillChecked' + index" /></td>
-                    <td style="vertical-align:middle;">{{c.JobCategorySkillName}}</td>
-                    <td><input type="text" [(ngModel)]="c.Remarks" class="form-control" (change)="rowChanged(c)"
-                        [crud-non-required]="action" [name]="'Remarks' + index" /></td>
-                </tr>
-            </tbody>
-        </table>
-        
-
-<!--
         <nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
             <ng-container ngbNavItem>
-                <a ngbNavLink tlt>Archivos</a>
-                <ng-template ngbNavContent>
-                    <table class="table table-bordered  table-sm">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th [crud-show-c-u]="action" style="width:24px"></th>
-                                <th style="width:50%">Descripción</th>
-                                <th style="width:50%">Archivo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let r of record.JobPostFile ; let index=index">
-                                <tr *ngIf="r.EntityStatus !=='D'">
-                                    <td crud-show-c-u="{{action}}" style="min-width:24px;max-width:24px">
-                                        <button type="button" class="btn btn-outline-danger" title="Eliminar"
-                                            (click)="itemRemove('JobPostFile',r)">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </td>
-                                    <td><input type="text" [(ngModel)]="r.JobPostFileName" class="form-control"
-                                            autocomplete="off" [crud-non-required]="action" placeholder="Descripción"
-                                            (ngModelChange)="rowChanged(r)" [name]="'JobPostFileName' + index" />
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
-                                                *ngIf="r.PreviewFileID===false">
-                                                {{r.FileName}}
-                                            </a>
-                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
-                                                *ngIf="r.PreviewFileID===true">
-                                                <img src="{{baseUrl}}Api/File/GetThumbnailFile/{{r.FileID}}"
-                                                    *ngIf="r.PreviewFileID===true" />
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                        <tfoot>
-                            <tr style="font-weight:bold">
-                                <td colspan="1" crud-show-c-u="{{action}}">
-                                    <label for="JobPostFileFileID" class="btn btn-oil" [crud-show-c-u]="action">
-                                        <i class="fas fa-upload"></i>&nbsp;&nbsp;<span tlt>Subir Archivo</span>
-                                    </label>
-                                    <input type="file" name="JobPostFileFileID" id="JobPostFileFileID"
-                                        (change)="uploadFileAndAddItem($event,'JobPostFile')" />
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </ng-template>
-            </ng-container>
-            <ng-container ngbNavItem>
-                <a ngbNavLink tlt>Herramientas</a>
+                <a ngbNavLink tlt>Habilidades</a>
                 <ng-template ngbNavContent>
                     <table class="table table-bordered table-striped table-sm">
                         <thead class="thead-dark">
                             <tr>
                                 <th style="min-width:56px">
                                     <div [crud-show-c-u]="action">
-                                        <check-uncheck [list]="record.JobPostTool"></check-uncheck>
+                                        <check-uncheck [list]="record.JobPostSkill"></check-uncheck>
                                     </div>
                                 </th>
-                                <th style="width:100%">Herramienta</th>
+                                <th style="width:100%">Habilidades</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let c of record.JobPostTool ; let index=index">
+                            <tr
+                                *ngFor="let c of record.JobPostSkill | filter:{'JobCategoryID':record.JobCategoryID} ; let index=index">
                                 <td><input type="checkbox" [(ngModel)]="c.Checked" class="form-control"
-                                        [crud-non-required]="action" [name]="'JobPostToolChecked' + index" /></td>
-                                <td style="vertical-align:middle;">{{c.ToolName}}</td>
+                                        [crud-non-required]="action" [name]="'JobPostSkillChecked' + index" /></td>
+                                <td style="vertical-align:middle;">{{c.JobCategorySkillName}}</td>
+
                             </tr>
                         </tbody>
                     </table>
                 </ng-template>
             </ng-container>
             <ng-container ngbNavItem>
-                <a ngbNavLink tlt>Usuarios de la publicación</a>
+                <a ngbNavLink tlt>Postulantes</a>
                 <ng-template ngbNavContent>
 
-                    <crud-taglist [idFieldName]="'UserID'" [displayFieldName]="'UserName'"
-                        [(ngModel)]="record.JobPostUser" placeholder="Usuarios de la publicación" name="User"
-                        [ngbTypeahead]="tableSearchTag('User',record.JobPostUser)" [action]="action"></crud-taglist>
+                    <table class="table table-condensed table-bordered table-sm table-hover">
+                        <thead class="thead-dark" ngbTooltip="{{record.JobApplicance?.length}} Registros"
+                            data-container="body">
+                            <th>Fecha</th>
+                            <th>Postulante</th>
+                            <th>Carta de Presentación</th>
+                            <th>Archivo</th>
+                            <th>Estado</th>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let r of record.JobApplicance | orderBy:JobApplicanceID">
+                                <td>{{r.ApplicanceDate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{r.UserName}}</td>
+                                <td>{{r.JobApplicanceText}}</td>
+                                <td>
+
+                                    <a target="_blank"
+                                        href="{{baseUrl}}Api/file/{{r.JobApplicanceFileID}}">{{r.FileName}}</a>
+                                </td>
+                                <td>
+                                    <select [(ngModel)]="r.JobApplicanceStatusID" class="form-control" autocomplete="off"
+                                    (change)="UpdateJobAppicanceStatus(r)"
+                                        placeholder="Estado" name="txtJobApplicanceID">
+                                        <option [ngValue]=undefined selected> - Seleccione -</option>
+                                        <option [value]="T.JobApplicanceStatusID"
+                                            *ngFor="let T of JobApplicanceStatusList | orderBy:'JobApplicanceStatusName'">
+                                            {{ T.JobApplicanceStatusName }}</option>
+                                    </select>
+
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
 
 
                 </ng-template>
             </ng-container>
         </nav>
         <div [ngbNavOutlet]="nav"></div>
-        -->
     </div>
 
 </form>

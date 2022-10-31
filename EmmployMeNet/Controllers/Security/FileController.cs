@@ -14,7 +14,7 @@ using System.Drawing;
 using CabernetDBContext;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EmmploymeNet.ontrollers
+namespace EmmploymeNet.Controllers
 {
     [Route("api/File")]
     [ApiController]

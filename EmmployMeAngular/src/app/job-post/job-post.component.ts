@@ -1,13 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { CrudFormComponent } from 'ngx-cabernet';
 
 @Component({
   selector: 'job-post',
   template: ''
 })
-export abstract class JobPostComponent extends CrudFormComponent implements OnInit {
+export abstract class JobPostComponent extends CrudFormComponent implements OnInit ,AfterViewInit {
+  ngAfterViewInit(): void {
+    this.title="Publicar Ofertas";  
+  }
   
   JobCategoryList: any[];
+  JobPostStatusList: any[];
+  JobApplicanceStatusList: any[];
   JobCategorySkillList: any[];
 
   ngOnInit(): void {
@@ -15,14 +20,32 @@ export abstract class JobPostComponent extends CrudFormComponent implements OnIn
     this.identityKey =true;
     this.fillRecordListOnInit = true;
 
+    
     this.setCheckList("JobPostSkill", "JobCategorySkillList", "JobCategorySkillID");
 
     this.referenceData.push(
       {url: 'Api/JobCategory', listName: 'JobCategoryList' },
+      {url: 'Api/JobPostStatus', listName: 'JobPostStatusList' },
+      {url: 'Api/JobApplicanceStatus', listName: 'JobApplicanceStatusList' },
       {url: 'Api/JobCategorySkill', listName: 'JobCategorySkillList' },
 
     );
-    this.title="Publicar Ofertas";
+    
+
+    this.onAddRecord.subscribe(record => {
+      record.JobPostStatusID ="OPENED";
+    })
+
+  }
+
+  UpdateJobAppicanceStatus(r):void  
+  {
+    this.crudService.addRecord("JobPost/UpdateJobAppicanceStatus",  r ).subscribe(newRecord => {
+      this.crudService.showMessageAutoClose("Atención", "Estado modificado correctamente", "OK");
+
+  });
+  
+
   }
 }
 

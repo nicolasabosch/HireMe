@@ -10,6 +10,7 @@ namespace EmmploymeNet.Model
     {
         public JobPost()
         {
+            JobApplicance = new HashSet<JobApplicance>();
             JobPostSkill = new HashSet<JobPostSkill>();
         }
 
@@ -33,6 +34,9 @@ namespace EmmploymeNet.Model
         public string JobCategoryID { get; set; }
 
         
+        public string JobPostStatusID { get; set; }
+
+        
         public DateTimeOffset? CreatedOn { get; set; }
 
         
@@ -46,7 +50,9 @@ namespace EmmploymeNet.Model
         public string LastModifiedBy { get; set; }
 
         public virtual JobCategory JobCategory { get; set; }
+        public virtual JobPostStatus JobPostStatus { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<JobApplicance> JobApplicance { get; set; }
         public virtual ICollection<JobPostSkill> JobPostSkill { get; set; }
 
         [NotMapped]

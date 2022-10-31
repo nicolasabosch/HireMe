@@ -6,13 +6,15 @@
             <tr>
                <th> <th-sort text="Fecha"  fieldName ="JobPostDate" [(listOrder)]="recordListOrder" default="ASC"></th-sort></th>
 			   <th> <th-sort text="Título"  fieldName ="JobPostName" [(listOrder)]="recordListOrder" default="ASC"></th-sort></th>
+               <th> <th-sort text="Estado"  fieldName ="JobPostStatusName" [(listOrder)]="recordListOrder" default="ASC"></th-sort></th>
             </tr>
 			</thead>
             <tbody>
 				<tr *ngFor="let r of recordList | search:searchText.split(' ')[0] | search:searchText.split(' ')[1] | search:searchText.split(' ')[2] | orderBy:recordListOrder" (click)="viewRecord(r)"
-                    [ngClass]="{'table-info': r.CompanyTypeID === selectedID}">
+                    [ngClass]="{'table-info': r.JobPostID === selectedID}">
 					<td>{{r.JobPostDate | date:'dd/MM/yyyy'}}</td>
 					<td>{{r.JobPostName}}</td>
+                    <td>{{r.JobPostStatusName}}</td>
 
                 </tr>
             </tbody>

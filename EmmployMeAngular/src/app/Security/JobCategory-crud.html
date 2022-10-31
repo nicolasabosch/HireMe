@@ -2,59 +2,58 @@
     <crud-toolbar [form]="this"></crud-toolbar>
 
     <div class="form-body">
-		<div class="row">
-			<div class="col-sm-3 form-group">
-	<label for="txtJobCategoryID" >
-			Código
-		</label>
-		<input type="text" [(ngModel)]="record.JobCategoryID" class="form-control" autocomplete="off"  [crud-key]="action"  
-				placeholder="Código" name="txtJobCategoryID" />
-</div><div class="col-sm-9 form-group">
-	<label for="txtJobCategoryName" >
-			Nombre
-		</label>
-		<input type="text" [(ngModel)]="record.JobCategoryName" class="form-control" autocomplete="off"  [crud-required]="action"  
-				placeholder="Nombre" name="txtJobCategoryName" />
-</div>
-		</div>
+        <div class="row">
+            <div class="col-sm-9 form-group">
+                <label for="txtJobCategoryName">
+                    Nombre
+                </label>
+                <input type="text" [(ngModel)]="record.JobCategoryName" class="form-control" autocomplete="off"
+                    [crud-required]="action" placeholder="Nombre" name="txtJobCategoryName" />
+            </div>
+        </div>
 
-		<nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false"><ng-container ngbNavItem>
-<a ngbNavLink tlt>JobCategorySkill</a>
-<ng-template ngbNavContent>
-<table class="table table-bordered  table-sm">
-    <thead class="thead-dark">
-        <tr>
-            <th [crud-show-c-u]="action" style="width:24px;"></th>
-           <th style="width:100%">Nombre</th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-container *ngFor="let r of record.JobCategorySkill ; let index=index">
-            <tr *ngIf="r.EntityStatus !=='D'">
-                <td crud-show-c-u="{{action}}" style="width:24px">
-                    <button type="button" class="btn btn-outline-danger" title="Eliminar"
-                        (click)="itemRemove('JobCategorySkill',r)">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </td>
-                <td><input type="text" [(ngModel)]="r.JobCategorySkillName" class="form-control" autocomplete="off"  [crud-required]="action"  
-				placeholder="Nombre" (ngModelChange)="rowChanged(r)"  [name]="'JobCategorySkillName' + index" /></td>                
-            </tr>
-        </ng-container>
-    </tbody>
-    <tfoot>
-        <tr style="font-weight:bold">
-            <td colspan="1" crud-show-c-u="{{action}}">
-                <button type="button" class="btn btn-outline-info"
-                    (click)="itemAdd('JobCategorySkill')">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </td>
-        </tr>
-    </tfoot>
-</table>
- </ng-template>
-</ng-container></nav> <div [ngbNavOutlet]="nav"></div>
-	</div>
-	
+        <nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>JobCategorySkill</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered  table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th [crud-show-c-u]="action" style="width:24px;"></th>
+                                <th style="width:100%">Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let r of record.JobCategorySkill ; let index=index">
+                                <tr *ngIf="r.EntityStatus !=='D'">
+                                    <td crud-show-c-u="{{action}}" style="width:24px">
+                                        <button type="button" class="btn btn-outline-danger" title="Eliminar"
+                                            (click)="itemRemove('JobCategorySkill',r)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                    <td><input type="text" [(ngModel)]="r.JobCategorySkillName" class="form-control"
+                                            autocomplete="off" [crud-required]="action" placeholder="Nombre"
+                                            (ngModelChange)="rowChanged(r)" [name]="'JobCategorySkillName' + index" />
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:bold">
+                                <td colspan="1" crud-show-c-u="{{action}}">
+                                    <button type="button" class="btn btn-outline-info"
+                                        (click)="itemAdd('JobCategorySkill')">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </ng-template>
+            </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+
 </form>

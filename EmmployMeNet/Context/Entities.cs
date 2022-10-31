@@ -12,10 +12,13 @@ namespace EmmploymeNet.Model
         public virtual DbSet<CompanyType> CompanyType { get; set; }
         public virtual DbSet<DataTable> DataTable { get; set; }
         public virtual DbSet<File> File { get; set; }
+        public virtual DbSet<JobApplicance> JobApplicance { get; set; }
+        public virtual DbSet<JobApplicanceStatus> JobApplicanceStatus { get; set; }
         public virtual DbSet<JobCategory> JobCategory { get; set; }
         public virtual DbSet<JobCategorySkill> JobCategorySkill { get; set; }
         public virtual DbSet<JobPost> JobPost { get; set; }
         public virtual DbSet<JobPostSkill> JobPostSkill { get; set; }
+        public virtual DbSet<JobPostStatus> JobPostStatus { get; set; }
         public virtual DbSet<JobRequest> JobRequest { get; set; }
         public virtual DbSet<JobRequestFile> JobRequestFile { get; set; }
         public virtual DbSet<JobRequestTool> JobRequestTool { get; set; }
@@ -165,6 +168,74 @@ namespace EmmploymeNet.Model
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<JobApplicance>(entity =>
+            {
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JobApplicanceFileID)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JobApplicanceStatusID)
+                    .IsRequired()
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JobApplicanceText).IsUnicode(false);
+
+                entity.Property(e => e.JobPostID).HasComment("Código");
+
+                entity.Property(e => e.LastModifiedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserID)
+                    .IsRequired()
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasComment("User Id");
+
+                entity.HasOne(d => d.JobApplicanceStatus)
+                    .WithMany(p => p.JobApplicance)
+                    .HasForeignKey(d => d.JobApplicanceStatusID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JobApplicance_JobApplicanceStatus");
+
+                entity.HasOne(d => d.JobPost)
+                    .WithMany(p => p.JobApplicance)
+                    .HasForeignKey(d => d.JobPostID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JobApplicance_JobPost");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.JobApplicance)
+                    .HasForeignKey(d => d.UserID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JobApplicance_User");
+            });
+
+            modelBuilder.Entity<JobApplicanceStatus>(entity =>
+            {
+                entity.Property(e => e.JobApplicanceStatusID)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JobApplicanceStatusName)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastModifiedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<JobCategory>(entity =>
             {
                 entity.Property(e => e.JobCategoryID)
@@ -252,6 +323,11 @@ namespace EmmploymeNet.Model
                     .IsUnicode(false)
                     .HasComment("Título");
 
+                entity.Property(e => e.JobPostStatusID)
+                    .IsRequired()
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.LastModifiedBy)
                     .HasMaxLength(200)
                     .IsUnicode(false);
@@ -267,6 +343,12 @@ namespace EmmploymeNet.Model
                     .HasForeignKey(d => d.JobCategoryID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_JobPost_JobCategory");
+
+                entity.HasOne(d => d.JobPostStatus)
+                    .WithMany(p => p.JobPost)
+                    .HasForeignKey(d => d.JobPostStatusID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JobPost_JobPostStatus");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.JobPost)
@@ -306,6 +388,26 @@ namespace EmmploymeNet.Model
                     .HasForeignKey(d => d.JobPostID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_JobPostSkill_JobPost");
+            });
+
+            modelBuilder.Entity<JobPostStatus>(entity =>
+            {
+                entity.Property(e => e.JobPostStatusID)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.JobPostStatusName)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastModifiedBy)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<JobRequest>(entity =>

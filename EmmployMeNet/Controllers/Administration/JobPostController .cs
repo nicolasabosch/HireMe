@@ -25,6 +25,9 @@ namespace EmmploymeNet.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+
+            var currentUserID = this.CurrentUserID();
+
             NameValueCollection parameters = HttpUtility.ParseQueryString(this.Request.QueryString.Value);
             var languageID = this.CurrentLanguageID();
             var previewList = new[] { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
@@ -32,6 +35,8 @@ namespace EmmploymeNet.Controllers
                 from JobPost in db.JobPost
                 join User in db.User on JobPost.UserID equals User.UserID
                 join JobCategory in db.JobCategory on JobPost.JobCategoryID equals JobCategory.JobCategoryID
+                join JobPostStatus in db.JobPostStatus on JobPost.JobPostStatusID equals JobPostStatus.JobPostStatusID
+                where JobPost.UserID == currentUserID
                 select new
                 {
                     JobPost.JobPostID,
@@ -41,9 +46,11 @@ namespace EmmploymeNet.Controllers
                     User.UserName,
                     JobPost.JobCategoryID,
                     JobCategory.JobCategoryName,
+                    JobPost.JobPostStatusID,
+                    JobPostStatus.JobPostStatusName,
                 }
 
-            );
+            ); ;
             if (parameters["key"] != null)
             {
                 int key = int.Parse(parameters["key"]);
@@ -75,6 +82,12 @@ namespace EmmploymeNet.Controllers
                 list = list.Where(l => l.JobCategoryID == jobCategoryID);
             }
 
+            if (parameters["JobPostStatusID"] != null)
+            {
+                string jobPostStatusID = parameters["JobPostStatusID"];
+                list = list.Where(l => l.JobPostStatusID == jobPostStatusID);
+            }
+
             var ret = list.AsEnumerable();
             return Ok(ret);
         }
@@ -96,6 +109,7 @@ namespace EmmploymeNet.Controllers
                     JobPost.JobPostDescription,
                     JobPost.JobPostDate,
                     JobPost.UserID,
+                    JobPost.JobPostStatusID,
                     User = new
                     {
                         JobPost.UserID,
@@ -131,37 +145,49 @@ namespace EmmploymeNet.Controllers
 
             ).ToList();
 
-            /*
-            record.JobPostFile = (
-                from JobPostFile in db.JobPostFile
-                join File in db.File on JobPostFile.FileID equals File.FileID
-                where JobPostFile.JobPostID == id
+            var currentUserID = this.CurrentUserID();
+
+            record.applicance = (
+                from JobApplicance in db.JobApplicance
+                join JobApplicanceStatus in db.JobApplicanceStatus on JobApplicance.JobApplicanceStatusID equals JobApplicanceStatus.JobApplicanceStatusID
+                from File in db.File.Where(X => X.FileID == JobApplicance.JobApplicanceFileID).DefaultIfEmpty()
+                where JobApplicance.JobPostID == id && JobApplicance.UserID == currentUserID
                 select new
                 {
-                JobPostFile.JobPostFileID, JobPostFile.JobPostFileName, JobPostFile.JobPostID, JobPostFile.FileID, File.FileName, PreviewFileID = File == null ? false : previewList.Contains(File.FileName.ToLower().Substring(File.FileName.ToLower().IndexOf("."))), EntityStatus = "U", JobPostFile.LastModifiedOn
-                }
 
-            ).ToList();
-            record.JobPostTool = (
-                from JobPostTool in db.JobPostTool
-                where JobPostTool.JobPostID == id
+                    JobApplicance.JobApplicanceID,
+                    JobApplicance.UserID,
+                    JobApplicance.JobApplicanceStatusID,
+                    JobApplicanceStatus.JobApplicanceStatusName,
+                    JobApplicance.JobApplicanceText,
+                    JobApplicance.JobApplicanceFileID,
+                    JobApplicance.CreatedOn,
+                    File.FileName
+                }).FirstOrDefault();
+
+
+            record.JobApplicance = (
+                from JobApplicance in db.JobApplicance
+                join User in db.User on JobApplicance.UserID equals User.UserID
+                from File in db.File.Where(X => X.FileID == JobApplicance.JobApplicanceFileID).DefaultIfEmpty()
+                where JobApplicance.JobPostID == id 
                 select new
                 {
-                JobPostTool.JobPostID, JobPostTool.ToolID, EntityStatus = "U", JobPostTool.LastModifiedOn
-                }
 
-            ).ToList();
-            record.JobPostUser = (
-                from JobPostUser in db.JobPostUser
-                join User in db.User on JobPostUser.UserID equals User.UserID
-                where JobPostUser.JobPostID == id
-                select new
-                {
-                JobPostUser.JobPostID, JobPostUser.UserID, User.UserName, EntityStatus = "U", JobPostUser.LastModifiedOn
-                }
+                    JobApplicance.JobApplicanceID,
+                    JobApplicance.JobPostID,
+                    JobApplicance.UserID,
+                    User.UserName,
+                    JobApplicance.JobApplicanceStatusID,
+                    JobApplicance.JobApplicanceText,
+                    JobApplicance.JobApplicanceFileID,
+                    ApplicanceDate = JobApplicance.CreatedOn,
+                    JobApplicance.LastModifiedOn,
+                    File.FileName
 
-            ).ToList();
-            */
+                }).ToList();
+
+
             return Ok(record);
         }
 
@@ -259,6 +285,116 @@ namespace EmmploymeNet.Controllers
 
             return jobPost;
         }
+
+
+
+        [HttpGet]
+        [Route("OpenedJobPost")]
+        public ActionResult OpenedJobPost()
+        {
+
+            var currentUserID = this.CurrentUserID();
+
+            NameValueCollection parameters = HttpUtility.ParseQueryString(this.Request.QueryString.Value);
+            var languageID = this.CurrentLanguageID();
+            var previewList = new[] { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
+            var list = (
+                from JobPost in db.JobPost
+                join User in db.User on JobPost.UserID equals User.UserID
+                join JobCategory in db.JobCategory on JobPost.JobCategoryID equals JobCategory.JobCategoryID
+                join JobPostStatus in db.JobPostStatus on JobPost.JobPostStatusID equals JobPostStatus.JobPostStatusID
+                from JobApplicance in db.JobApplicance.Where(X => X.JobPostID == JobPost.JobPostID && X.UserID == currentUserID).DefaultIfEmpty()
+                from JobApplicanceStatus in db.JobApplicanceStatus.Where(X => X.JobApplicanceStatusID == JobApplicance.JobApplicanceStatusID).DefaultIfEmpty()
+
+                where JobPost.JobPostStatusID == "OPENED"
+                select new
+                {
+                    JobPost.JobPostID,
+                    JobPost.JobPostName,
+                    JobPost.JobPostDate,
+                    JobPost.UserID,
+                    User.UserName,
+                    JobPost.JobCategoryID,
+                    JobCategory.JobCategoryName,
+                    JobPost.JobPostStatusID,
+                    JobPostStatus.JobPostStatusName,
+                    JobApplicance.JobApplicanceID,
+                    ApplicanceDate =  JobApplicance.CreatedOn,
+                    JobApplicanceStatus.JobApplicanceStatusName
+
+                }
+
+            ); 
+            if (parameters["key"] != null)
+            {
+                int key = int.Parse(parameters["key"]);
+                list = list.Where(l => l.JobPostID == key);
+            }
+
+            if (parameters["JobPostID"] != null)
+            {
+                int jobPostID = int.Parse(parameters["JobPostID"]);
+                list = list.Where(l => l.JobPostID == jobPostID);
+            }
+
+            if (parameters["JobPostName"] != null)
+            {
+                string jobPostName = parameters["JobPostName"];
+                list = list.Where(l => l.JobPostName.Contains(jobPostName));
+                list = list.OrderBy(l => l.JobPostName.IndexOf(jobPostName));
+            }
+
+            if (parameters["UserID"] != null)
+            {
+                string userID = parameters["UserID"];
+                list = list.Where(l => l.UserID == userID);
+            }
+
+            if (parameters["JobCategoryID"] != null)
+            {
+                string jobCategoryID = parameters["JobCategoryID"];
+                list = list.Where(l => l.JobCategoryID == jobCategoryID);
+            }
+
+            if (parameters["JobPostStatusID"] != null)
+            {
+                string jobPostStatusID = parameters["JobPostStatusID"];
+                list = list.Where(l => l.JobPostStatusID == jobPostStatusID);
+            }
+
+            var ret = list.AsEnumerable();
+            return Ok(ret);
+        }
+
+
+        [HttpPost]
+        [Route("ApplyJobPost")]
+        public ActionResult<JobApplicance> ApplyJobPost(JobApplicance jobApplicance)
+        {
+            jobApplicance.UserID = this.CurrentUserID();
+            jobApplicance.JobApplicanceStatusID = "PENDING";
+            db.JobApplicance.Add(jobApplicance);
+            db.SaveChanges();
+
+            return CreatedAtAction("ApplyJobPost", new { id = jobApplicance.JobApplicanceID }, jobApplicance);
+        }
+
+
+
+
+
+        [HttpPost]
+        [Route("UpdateJobAppicanceStatus")]
+        public ActionResult<JobApplicance> UpdateJobAppicanceStatus(JobApplicance jobApplicance)
+        {
+
+            var ja = db.JobApplicance.Find(jobApplicance.JobApplicanceID);
+            ja.JobApplicanceStatusID = jobApplicance.JobApplicanceStatusID;
+            db.SaveChanges();
+
+            return CreatedAtAction("ApplyJobPost", new { id = jobApplicance.JobApplicanceID }, jobApplicance);
+        }
+
 
         private bool JobPostExists(int id)
         {

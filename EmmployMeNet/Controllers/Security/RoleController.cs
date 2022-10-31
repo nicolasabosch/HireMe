@@ -27,13 +27,15 @@ namespace EmmploymeNet.Controllers
         {
             NameValueCollection parameters = HttpUtility.ParseQueryString(this.Request.QueryString.Value);
             var languageID = this.CurrentLanguageID();
-            var previewList = new[]{".jpeg", ".jpg", ".png", ".gif", ".bmp"};
-            
+            var previewList = new[] { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
+
             var list = (
                 from Role in db.Role
-            select new
+                select new
                 {
-                Role.RoleID, Role.RoleName}
+                    Role.RoleID,
+                    Role.RoleName
+                }
 
             );
             if (parameters["key"] != null)
@@ -55,7 +57,7 @@ namespace EmmploymeNet.Controllers
                 list = list.OrderBy(l => l.RoleName.IndexOf(roleName));
             }
 
-            
+
             var ret = list.AsEnumerable();
             return Ok(ret);
         }
@@ -65,13 +67,18 @@ namespace EmmploymeNet.Controllers
         public ActionResult GetRole(string id)
         {
             var languageID = this.CurrentLanguageID();
-            var previewList = new[]{".jpeg", ".jpg", ".png", ".gif", ".bmp"};
+            var previewList = new[] { ".jpeg", ".jpg", ".png", ".gif", ".bmp" };
             var role = (
                 from Role in db.Role
                 where Role.RoleID == id
                 select new
                 {
-                Role.RoleID, Role.RoleName, Role.CreatedOn, Role.CreatedBy, Role.LastModifiedOn, Role.LastModifiedBy
+                    Role.RoleID,
+                    Role.RoleName,
+                    Role.CreatedOn,
+                    Role.CreatedBy,
+                    Role.LastModifiedOn,
+                    Role.LastModifiedBy
                 }
 
             ).FirstOrDefault();
@@ -86,7 +93,10 @@ namespace EmmploymeNet.Controllers
                 where RoleMenuItem.RoleID == id
                 select new
                 {
-                RoleMenuItem.RoleID, RoleMenuItem.MenuItemID, EntityStatus = "U"
+                    RoleMenuItem.RoleID,
+                    RoleMenuItem.MenuItemID,
+                    EntityStatus = "U",
+                    RoleMenuItem.LastModifiedOn
                 }
 
             ).ToList();
@@ -104,7 +114,7 @@ namespace EmmploymeNet.Controllers
             {
                 db.Entry(role).State = EntityState.Modified;
                 Model.Entities.ProcessChildrenUpdate(db, role.RoleMenuItem.ToList());
-                Model.Entities.ProcessChildrenUpdate(db, role.DataTranslation.ToList());
+        //        Model.Entities.ProcessChildrenUpdate(db, role.DataTranslation.ToList());
                 try
                 {
                     db.SaveChanges();
@@ -151,7 +161,7 @@ namespace EmmploymeNet.Controllers
 
                 return CreatedAtAction("GetRole", new
                 {
-                id = role.RoleID
+                    id = role.RoleID
                 }
 
                 , role);

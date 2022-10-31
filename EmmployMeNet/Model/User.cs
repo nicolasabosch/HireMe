@@ -10,6 +10,7 @@ namespace EmmploymeNet.Model
     {
         public User()
         {
+            JobApplicance = new HashSet<JobApplicance>();
             JobPost = new HashSet<JobPost>();
             JobRequestUser = new HashSet<JobRequestUser>();
             UserRole = new HashSet<UserRole>();
@@ -80,6 +81,7 @@ namespace EmmploymeNet.Model
         public virtual Company Company { get; set; }
         public virtual File File { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual ICollection<JobApplicance> JobApplicance { get; set; }
         public virtual ICollection<JobPost> JobPost { get; set; }
         public virtual ICollection<JobRequestUser> JobRequestUser { get; set; }
         public virtual ICollection<UserRole> UserRole { get; set; }

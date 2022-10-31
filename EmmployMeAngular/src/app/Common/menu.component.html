@@ -18,8 +18,12 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-    <ul class="navbar-nav mr-auto" *ngIf="crudService.user.UserTypeID ===200"></ul>
-    <ul class="navbar-nav mr-auto" *ngIf="crudService.user.UserTypeID !==200">
+    <ul class="navbar-nav mr-auto" *ngIf="crudService.user.UserTypeID ==='EXTERNAL'">
+      <button routerLink="/Home" class="btn bnt-sucess">Inicio</button>
+    <button routerLink="/JobOpportunity" class="btn bnt-sucess">Oportunidades Laborales</button>
+    <button routerLink="/JobPost" class="btn bnt-sucess">Publicar Oferta</button>
+    </ul>
+    <ul class="navbar-nav mr-auto" *ngIf="crudService.user.UserTypeID ==='INTERNAL'">
       <li class="nav-item dropdown " style="margin-right: 30px !important;"
         *ngFor="let menuBar of crudService.UserMenuList | filter:'MenuBarID': '!HOME' | unique:'MenuBarName' | orderBy:'MenuBarDisplayOrder'">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -78,13 +82,15 @@
     
     <div class="dropdown">
   <p style="color: black; margin-right: 2rem;" class="nav-item dropdown ng-star-inserted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{crudService.user.UserName}}</p>
-  
+  <!--
+
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" (click)="logout()">Cerrar Sesion</a>
     <a href="home.component.html" class="dropdown-item" >home</a>
 
     
   </div>
+  -->
 </div>
   </div>
 </div>
