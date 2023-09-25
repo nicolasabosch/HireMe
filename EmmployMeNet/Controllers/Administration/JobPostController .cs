@@ -40,6 +40,7 @@ namespace EmmploymeNet.Controllers
                 select new
                 {
                     JobPost.JobPostID,
+                    JobPost.JobPostDescription,
                     JobPost.JobPostName,
                     JobPost.JobPostDate,
                     JobPost.UserID,
@@ -311,6 +312,7 @@ namespace EmmploymeNet.Controllers
                 select new
                 {
                     JobPost.JobPostID,
+                    JobPost.JobPostDescription,
                     JobPost.JobPostName,
                     JobPost.JobPostDate,
                     JobPost.UserID,
